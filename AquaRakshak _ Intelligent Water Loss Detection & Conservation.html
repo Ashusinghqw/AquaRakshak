@@ -1,0 +1,190 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AquaRakshak | Intelligent Water Loss Detection & Conservation</title>
+<meta name="description" content="Monitor water consumption, identify unusual usage, estimate water bills, and explore practical water conservation opportunities with AquaRakshak.">
+<link rel="canonical" href="https://example.com/"><meta property="og:title" content="AquaRakshak | Intelligent Water Loss Detection & Conservation"><meta property="og:description" content="Detect leaks. Reduce waste. Protect every drop."><meta property="og:type" content="website"><meta property="og:image" content="/assets/og.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%2348D6A0' d='M12 2C8 8 5 11 5 15a7 7 0 0 0 14 0c0-4-3-7-7-13z'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"AquaRakshak","description":"Water usage monitoring and leak-investigation platform"}</script>
+<style>
+:root{--bg:#071B16;--bg2:#0D2921;--surf:#12362A;--acc:#48D6A0;--acc2:#B5E48C;--tx:#F4F8F5;--tx2:#B3C8BC;--bd:#29483B;--err:#FF7B72;--warn:#F4C76B;--ok:#6EE7A8;--r:20px;--r-s:12px;--sh:0 18px 50px rgba(0,0,0,.35);--f:'Manrope',system-ui,sans-serif;--fd:'Fraunces',Georgia,serif;--pad:clamp(20px,5vw,72px)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--tx);font:400 1rem/1.65 var(--f);overflow-x:hidden}
+h1,h2,h3{font-family:var(--fd);line-height:1.1;font-weight:700;letter-spacing:-.02em}
+h1{font-size:clamp(2.4rem,6.5vw,4.8rem)}h2{font-size:clamp(1.8rem,4vw,3rem);max-width:20ch}h3{font-size:1.2rem}
+p{color:var(--tx2);max-width:62ch}a{color:inherit}
+:focus-visible{outline:3px solid var(--acc2);outline-offset:3px}
+section{padding:clamp(56px,9vw,110px) var(--pad)}.alt{background:var(--bg2)}
+.wrap{max-width:1240px;margin:auto}.grid{display:grid;gap:18px;margin-top:36px;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r);padding:24px;transition:transform .2s,border-color .2s}.card:hover{transform:translateY(-3px);border-color:var(--acc)}
+.card svg.i{width:28px;height:28px;stroke:var(--acc);fill:none;stroke-width:1.8;margin-bottom:14px}.card p{font-size:.95rem}
+.btn{min-height:46px;padding:0 24px;border-radius:99px;border:1px solid var(--acc);background:var(--acc);color:#04211a;font:700 .95rem var(--f);cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--tx)}.btn:hover{filter:brightness(1.1)}.btn[disabled]{opacity:.6;cursor:wait}
+.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+header{position:sticky;top:0;z-index:50;background:rgba(7,27,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--bd)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px var(--pad);max-width:1400px;margin:auto}
+.logo{display:flex;gap:10px;align-items:center;font:700 1.25rem var(--fd);text-decoration:none}.logo svg{width:26px;fill:var(--acc)}
+.links{display:flex;gap:26px;align-items:center}.links a{text-decoration:none;color:var(--tx2);font-weight:500}.links a:hover{color:var(--tx)}
+#menu{display:none;min-width:44px;min-height:44px;background:none;border:1px solid var(--bd);color:var(--tx);border-radius:12px;font-size:1.2rem}
+@media(max-width:860px){#menu{display:block}.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg);padding:16px var(--pad) 24px;border-bottom:1px solid var(--bd)}.links.open{display:flex}.links a{padding:10px 0}}
+.hero{display:grid;gap:40px;align-items:center;padding-top:clamp(32px,6vw,80px)}@media(min-width:960px){.hero{grid-template-columns:1.05fr 1fr}}
+.hero .sub{font:500 1.15rem var(--fd);color:var(--acc2);margin:18px 0 10px}
+.collage{position:relative;min-height:420px;border-radius:32px;overflow:hidden;background:radial-gradient(120% 90% at 70% 10%,#1d5c48,#0b2e25 55%,#061712);border:1px solid var(--bd);box-shadow:var(--sh)}
+.collage svg.w{position:absolute;inset:auto 0 0 0;width:100%}
+.float{position:absolute;background:rgba(18,54,42,.95);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:var(--sh);font-size:.85rem}
+.f1{top:7%;left:6%;width:min(230px,60%)}.f2{bottom:9%;right:6%;width:min(210px,58%)}.float b{font:700 1.7rem var(--fd);display:block}.float small{color:var(--tx2)}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.75rem;font-weight:700;background:rgba(244,199,107,.15);color:var(--warn)}
+.split{display:grid;gap:40px;align-items:center}.split>*,.hero>*{min-width:0}@media(min-width:960px){.split{grid-template-columns:1fr 1fr}}
+ul.ck{list-style:none;padding:0;margin-top:18px;display:grid;gap:10px;color:var(--tx2)}ul.ck li::before{content:"✓ ";color:var(--acc);font-weight:700}
+.note{border-left:3px solid var(--warn);padding:10px 14px;background:rgba(244,199,107,.07);border-radius:0 10px 10px 0;font-size:.9rem;color:var(--tx2);margin-top:18px}
+form.f{display:grid;gap:16px}.fg{display:grid;gap:6px}.fg.two{grid-template-columns:1fr 1fr}@media(max-width:520px){.fg.two{grid-template-columns:1fr}}
+label{font-weight:700;font-size:.9rem}input,textarea,select{width:100%;min-height:46px;padding:11px 14px;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:var(--r-s);font:inherit}textarea{resize:vertical;min-height:96px}
+input[aria-invalid=true],textarea[aria-invalid=true]{border-color:var(--err)}.err{color:var(--err);font-size:.82rem;min-height:1em}.hint{font-size:.8rem;color:var(--tx2)}
+.res{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:20px}.res div{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r-s);padding:14px}.res small{color:var(--tx2);display:block}.res b{font:700 1.4rem var(--fd)}
+#interp{margin-top:16px;padding:14px;border-radius:var(--r-s);background:var(--bg);border:1px solid var(--bd)}
+.seg{display:flex;gap:8px;flex-wrap:wrap}.seg button{min-height:44px;padding:0 18px;border-radius:99px;border:1px solid var(--bd);background:transparent;color:var(--tx);cursor:pointer;font:700 .9rem var(--f)}.seg button[aria-pressed=true]{background:var(--acc);color:#04211a;border-color:var(--acc)}
+#report{background:#fff;color:#12261f;border-radius:var(--r);padding:clamp(18px,4vw,40px);margin-top:24px}#report p,#report td,#report li{color:#2c4a3f}#report h3{color:#0b3a2c}#report table{width:100%;border-collapse:collapse;margin:14px 0}#report td{padding:8px 4px;border-bottom:1px solid #d7e5dc}#report td:last-child{text-align:right;font-weight:700}
+.steps{display:grid;gap:18px;counter-reset:s}@media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr)}.steps .card::after{content:"";position:absolute;top:44px;right:-18px;width:18px;border-top:2px dashed var(--acc)}.steps .card:last-child::after{display:none}}.steps .card{position:relative;counter-increment:s}.steps .card h3::before{content:counter(s);display:inline-grid;place-items:center;width:32px;height:32px;margin-right:10px;border-radius:50%;background:var(--acc);color:#04211a;font:700 .95rem var(--f)}
+.dash{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));margin-top:18px}.kpis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:28px}.kpis .card{padding:16px}.kpis b{font:700 1.9rem var(--fd);display:block}
+.cv{position:relative;height:260px;min-width:0}.cv canvas{max-width:100%}#state{margin-top:14px}
+details{background:var(--surf);border:1px solid var(--bd);border-radius:var(--r-s);padding:16px 20px;margin-top:10px}summary{cursor:pointer;font-weight:700;min-height:28px}details p{margin-top:8px}
+.cta{text-align:center;background:linear-gradient(160deg,#12362A,#0a2a21);border-block:1px solid var(--bd)}.cta h2,.cta p{margin-inline:auto}.cta .row{justify-content:center}
+footer{padding:56px var(--pad) 32px;border-top:1px solid var(--bd)}.fg3{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}footer h3{font:700 1rem var(--f);margin-bottom:10px}footer a{display:block;color:var(--tx2);text-decoration:none;padding:3px 0}
+dialog{border:1px solid var(--bd);border-radius:var(--r);background:var(--bg2);color:var(--tx);width:min(560px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;box-shadow:var(--sh)}dialog::backdrop{background:rgba(2,10,8,.7)}
+.mh{display:flex;justify-content:space-between;align-items:start;gap:12px;padding:22px 24px 0}.mb{padding:16px 24px 24px;overflow-y:auto;max-height:calc(100dvh - 120px)}.x{min-width:44px;min-height:44px;background:none;border:1px solid var(--bd);color:var(--tx);border-radius:50%;font-size:1.2rem;cursor:pointer}
+#st{padding:12px;border-radius:var(--r-s);font-size:.9rem;display:none}#st.ok{display:block;background:rgba(110,231,168,.12);color:var(--ok)}#st.bad{display:block;background:rgba(255,123,114,.12);color:var(--err)}
+@media(max-width:600px){dialog{width:100%;max-width:none;margin:auto 0 0;border-radius:var(--r) var(--r) 0 0}}
+@media print{body>*:not(main){display:none}main>section:not(#report-sec){display:none}#report-sec{padding:0;background:#fff}#report-sec .noprint{display:none}#report{margin:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<header><nav aria-label="Main"><a class="logo" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8 8 5 11 5 15a7 7 0 0 0 14 0c0-4-3-7-7-13z"/></svg>AquaRakshak</a>
+<button id="menu" aria-expanded="false" aria-controls="links" aria-label="Toggle menu">☰</button>
+<div class="links" id="links"><a href="#home">Home</a><a href="#solution">Our Solution</a><a href="#features">Features</a><a href="#impact">Impact</a><a href="#contact">Contact</a><button class="btn" data-book="general">Book a Consultation</button></div></nav></header>
+<main>
+<section id="home" class="wrap hero" style="padding-inline:var(--pad);max-width:1400px;margin:auto">
+<div><h1>Every Drop Counts. Every Leak Matters.</h1><p class="sub">Intelligent Water Loss Detection and Conservation</p>
+<p>Monitor water consumption, identify unusual usage, understand your water expenses, and discover smarter ways to protect every drop.</p>
+<div class="row"><a class="btn" href="#calculator">Check Your Water Usage</a><button class="btn ghost" data-book="general">Book a Consultation</button></div>
+<p style="margin-top:20px;font-size:.9rem">Detect leaks. Reduce waste. Protect every drop.</p></div>
+<div class="collage" role="img" aria-label="Illustration of layered water ripples with a usage dashboard card">
+<svg class="w" viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true"><path d="M0 90Q150 40 300 90T600 90V260H0Z" fill="#48D6A0" opacity=".18"/><path d="M0 130Q150 80 300 130T600 130V260H0Z" fill="#48D6A0" opacity=".25"/><path d="M0 175Q150 125 300 175T600 175V260H0Z" fill="#B5E48C" opacity=".22"/></svg>
+<div class="float f1"><small>Avg daily usage (sample)</small><b>12.4 kL</b><span class="tag">Sample data</span></div>
+<div class="float f2"><small>Potential-leak alert</small><b style="color:var(--warn)">Review</b><small>Usage above baseline for 3 days</small></div></div></section>
+
+<section class="alt" id="problem"><div class="wrap"><h2>Water Loss Often Goes Unnoticed.</h2><div class="grid">
+<article class="card"><svg class="i" viewBox="0 0 24 24"><path d="M12 3c-3 5-6 7-6 11a6 6 0 0 0 12 0c0-4-3-6-6-11z"/></svg><h3>Hidden leaks</h3><p>Undetected leaks may waste water before anyone notices.</p></article>
+<article class="card"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/></svg><h3>Little visibility</h3><p>Limited consumption visibility makes unusual usage difficult to identify.</p></article>
+<article class="card"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16v10H4zM12 10v4M4 12h2M18 12h2"/></svg><h3>Higher bills</h3><p>Excessive water consumption can increase utility expenses.</p></article>
+<article class="card"><svg class="i" viewBox="0 0 24 24"><path d="M3 17c3-3 6 3 9 0s6 3 9 0M3 11c3-3 6 3 9 0s6 3 9 0"/></svg><h3>Resource pressure</h3><p>Avoidable water loss places additional pressure on limited water resources.</p></article></div></div></section>
+
+<section id="solution"><div class="wrap split"><div><h2>Meet AquaRakshak — From Water Data to Action.</h2>
+<ul class="ck"><li>Records water consumption.</li><li>Compares readings with expected usage.</li><li>Flags unusual patterns.</li><li>Helps you investigate potential leaks.</li><li>Estimates water bills.</li><li>Generates personalized conservation reports.</li></ul>
+<p class="note"><b>Honest scope:</b> alerts come from a transparent rule (daily usage above 125% of your baseline). This is rule-based detection, not advanced AI, and it cannot confirm a physical leak.</p></div>
+<div class="card" aria-label="Dashboard preview"><span class="tag">Preview · sample data</span><div class="cv" style="margin-top:12px"><canvas id="c0" role="img" aria-label="Sample weekly usage chart"></canvas></div></div></div></section>
+
+<section class="alt" id="features"><div class="wrap"><h2>Everything you need to understand your water.</h2><div class="grid" id="fgrid"></div></div></section>
+
+<section id="calculator"><div class="wrap split" style="align-items:start"><div><h2>Understand Your Water Usage. Estimate Your Water Bill.</h2><p style="margin-top:14px">Enter two cumulative meter readings. Units are kilolitres (kL); 1 kL equals 1,000 litres.</p></div>
+<form class="f card" id="calc" novalidate>
+<div class="fg two"><div class="fg"><label for="prev">Previous reading (kL)</label><input id="prev" type="number" step="any" min="0" inputmode="decimal"><span class="err" id="e-prev"></span></div>
+<div class="fg"><label for="curr">Current reading (kL)</label><input id="curr" type="number" step="any" min="0" inputmode="decimal"><span class="err" id="e-curr"></span></div></div>
+<div class="fg two"><div class="fg"><label for="days">Days between readings</label><input id="days" type="number" step="1" min="1" inputmode="numeric"><span class="err" id="e-days"></span></div>
+<div class="fg"><label for="tariff">Tariff per kL (₹)</label><input id="tariff" type="number" step="any" min="0" inputmode="decimal"><span class="err" id="e-tariff"></span></div></div>
+<div class="fg"><label for="base">Expected daily usage, optional (kL/day)</label><input id="base" type="number" step="any" min="0" inputmode="decimal"><span class="err" id="e-base"></span></div>
+<div class="fg"><label for="ef">Emission factor, optional (kg CO₂e per kL)</label><input id="ef" type="number" step="any" min="0" inputmode="decimal"><span class="hint">Energy used to supply and treat water. Use your utility's value if you have it; the demo uses an illustrative 0.3.</span><span class="err" id="e-ef"></span></div>
+<div class="row" style="margin:0"><button class="btn" type="submit">Calculate</button><button class="btn ghost" type="button" id="demoBtn">Try Demo</button></div>
+<div id="out" hidden><div class="res" id="res"></div><p id="interp"></p><div class="row"><button class="btn" type="button" id="toReport">Generate My Water Savings Report</button><button class="btn ghost" type="button" data-book="calculator">Discuss my results</button></div></div></form></div></section>
+
+<section class="alt" id="report-sec"><div class="wrap"><div class="noprint"><h2>Discover Your Water Conservation Potential.</h2>
+<p style="margin:14px 0">Choose a hypothetical reduction target. Results are estimates from your assumptions, not measured savings.</p>
+<div class="seg" role="group" aria-label="Reduction target" id="seg"><button aria-pressed="false" data-p="5">5%</button><button aria-pressed="true" data-p="10">10%</button><button aria-pressed="false" data-p="20">20%</button></div>
+<div class="row"><button class="btn" id="print">Print / Save as PDF</button><button class="btn ghost" data-book="report">Request a personalised report</button></div></div>
+<div id="report"><p>Run the calculator first (or press Try Demo) and your report appears here.</p></div></div></section>
+
+<section id="how"><div class="wrap"><h2>From reading to action in four steps.</h2><div class="steps" style="margin-top:36px">
+<div class="card"><h3>Record</h3><p>Enter or retrieve meter readings.</p></div><div class="card"><h3>Analyze</h3><p>Compare consumption against a baseline.</p></div><div class="card"><h3>Investigate</h3><p>Review unusual-usage alerts.</p></div><div class="card"><h3>Conserve</h3><p>Apply recommendations and monitor changes.</p></div></div></div></section>
+
+<section class="alt" id="dashboard"><div class="wrap"><h2>Your usage dashboard.</h2><div class="row"><button class="btn" id="loadDemo">Try Demo</button><button class="btn ghost" id="loadLive">Load saved data</button></div>
+<div id="state" role="status" aria-live="polite"></div>
+<div class="kpis" id="kpis"></div><div class="dash"><div class="card"><h3>Daily consumption (kL)</h3><div class="cv"><canvas id="c1" role="img" aria-label="Daily consumption chart"></canvas></div></div><div class="card"><h3>This period vs previous</h3><div class="cv"><canvas id="c2" role="img" aria-label="Period comparison chart"></canvas></div></div></div>
+<div class="card" style="margin-top:18px"><h3>Alert status</h3><div id="alerts"><p>Load demo or saved data to see alerts.</p></div></div></div></section>
+
+<section id="impact"><div class="wrap"><h2>Small Insights. Smarter Decisions. A Better Water Future.</h2><div class="grid">
+<div class="card"><h3>Earlier investigation</h3><p>Spot unusual water usage sooner.</p></div><div class="card"><h3>Better visibility</h3><p>See how consumption changes over time.</p></div><div class="card"><h3>Expense awareness</h3><p>Understand what your usage may cost.</p></div><div class="card"><h3>Informed maintenance</h3><p>Decide where to inspect first.</p></div><div class="card"><h3>Practical recommendations</h3><p>Act on clear conservation ideas.</p></div><div class="card"><h3>Track interventions</h3><p>Compare readings after changes you make.</p></div></div>
+<p class="note">AquaRakshak does not claim quantified savings. Any figure shown is an estimate from your own inputs.</p>
+<div class="card" style="margin-top:18px"><h3>Tracking and keeping our own carbon footprint low</h3><p>Saved water also means less pumping and treatment energy, so the calculator and report can estimate carbon from your usage when you enter an emission factor. The site itself is one light page with no photos, video, ads or tracking scripts, so each visit transfers little data. We have not measured the site's emissions and make no carbon claims for it.</p></div></div></section>
+
+<section class="alt"><div class="wrap"><h2>Who benefits?</h2><div class="grid">
+<div class="card"><h3>Households</h3><p>Check a monthly bill against a family baseline.</p></div><div class="card"><h3>Colleges and hostels</h3><p>Compare blocks and notice a night-time rise.</p></div><div class="card"><h3>Commercial buildings</h3><p>Review tenant-floor usage before billing queries.</p></div><div class="card"><h3>Facility managers</h3><p>Prioritise inspections using alert history.</p></div></div></div></section>
+
+<section id="faq"><div class="wrap"><h2>Questions, answered.</h2><div id="faqs" style="max-width:820px;margin-top:24px"></div></div></section>
+
+<section class="cta" id="contact"><h2>Make Every Drop Count.</h2><p style="margin-top:14px">Start understanding your water consumption today and take practical steps toward a more sustainable future.</p><div class="row"><a class="btn" href="#calculator">Check Your Water Usage</a><button class="btn ghost" data-book="general">Book a Consultation</button></div></section>
+</main>
+<footer><div class="fg3"><div><a class="logo" href="#home"><svg viewBox="0 0 24 24" width="26" aria-hidden="true" style="fill:var(--acc)"><path d="M12 2C8 8 5 11 5 15a7 7 0 0 0 14 0c0-4-3-7-7-13z"/></svg>AquaRakshak</a><p style="margin-top:10px">Detect leaks. Reduce waste. Protect every drop.</p><p style="margin-top:8px;font-size:.9rem">A hackathon project for water usage monitoring and conservation.</p></div>
+<div><h3>Explore</h3><a href="#solution">Our Solution</a><a href="#features">Features</a><a href="#impact">Impact</a><a href="#faq">FAQ</a></div><div><h3>Tools</h3><a href="#calculator">Bill calculator</a><a href="#report-sec">Savings report</a><a href="#dashboard">Dashboard</a></div>
+<div><h3>Contact</h3><button class="btn ghost" data-book="general">Request a consultation</button><p style="margin-top:10px;font-size:.85rem">Privacy: details you submit are used only to respond to your request.</p></div></div>
+<p style="margin-top:32px;font-size:.85rem">Our mission: make water loss visible so it can be reduced.</p></footer>
+
+<dialog id="dlg" aria-labelledby="dt"><div class="mh"><div><h2 id="dt" style="font-size:1.6rem">Book a Consultation</h2><p style="font-size:.9rem">Share your details and we will get back to you. This is a request, not a confirmed booking.</p></div><button class="x" id="close" aria-label="Close dialog">✕</button></div>
+<div class="mb"><form class="f" id="cf" novalidate>
+<div class="fg"><label for="n">Full name</label><input id="n" name="full_name" autocomplete="name" required><span class="err" id="e-n"></span></div>
+<div class="fg"><label for="p">Phone number</label><input id="p" name="phone_number" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required><span class="err" id="e-p"></span></div>
+<div class="fg"><label for="m">Email address</label><input id="m" name="email" type="email" autocomplete="email" required><span class="err" id="e-m"></span></div>
+<div class="fg"><label for="r">Why do you want to book?</label><textarea id="r" name="booking_reason" maxlength="500" required></textarea><span class="hint">Pre-filled for you. Edit it freely.</span><span class="err" id="e-r"></span></div>
+<div class="fg"><label for="a">Additional message (optional)</label><textarea id="a" name="additional_message" maxlength="1000" placeholder="Anything else we should know, such as building type or meter count?"></textarea></div>
+<p class="hint">Your contact details are used only to respond to this request and are not shared. Marketing consent is not required.</p>
+<div id="st" role="status" aria-live="polite"></div><button class="btn" id="sub" type="submit">Request a Consultation</button></form></div></dialog>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const API=window.AQ_API||'';
+const IC='<svg class="i" viewBox="0 0 24 24"><path d="M12 3c-3 5-6 7-6 11a6 6 0 0 0 12 0c0-4-3-6-6-11z"/></svg>';
+$('#fgrid').innerHTML=[['Water Consumption Monitoring','Record cumulative meter readings in kL.'],['Unusual Usage Detection','Compare usage with your expected baseline.'],['Potential-Leak Alerts','Rule-based flags that tell you where to look.'],['Water Bill Calculator','Estimate cost from your own tariff.'],['Consumption Analytics','Daily trends and period comparisons.'],['Water-Saving Recommendations','Practical steps matched to your results.'],['Water Savings Impact Report','Printable report with clear assumptions.'],['Historical Usage Tracking','Save readings and review changes over time.']].map(f=>`<article class="card">${IC}<h3>${f[0]}</h3><p>${f[1]}</p></article>`).join('');
+$('#faqs').innerHTML=[['What is AquaRakshak?','A web platform for tracking water readings, spotting unusual usage, estimating bills and planning conservation.'],['How does the water calculator work?','Consumption = current − previous reading. Daily average = consumption ÷ days. Bill = consumption × your tariff. It runs in your browser without sign-up.'],['Can AquaRakshak confirm a physical leak?','No. It flags usage above your baseline so you can inspect. Only a physical inspection can confirm a leak.'],['Do I need an IoT sensor?','No. You can enter readings from your existing meter by hand.'],['Can I save historical readings?','Yes, when the backend and database are configured. The calculator works without them.'],['How are savings estimated?','Baseline consumption × your chosen reduction (5, 10 or 20%), then × your tariff for cost. These are hypothetical estimates, not measured savings.'],['Can I download the impact report?','Yes. Use Print / Save as PDF in your browser.'],['How can I request a demonstration?','Use the Book a Consultation button. It sends a request; it does not confirm a time slot.']].map(q=>`<details><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('');
+$('#menu').onclick=e=>{const o=$('#links').classList.toggle('open');e.target.setAttribute('aria-expanded',o)};
+$$('#links a').forEach(a=>a.onclick=()=>$('#links').classList.remove('open'));
+let R=null,pct=10;const f2=n=>(+n).toLocaleString('en-IN',{maximumFractionDigits:2});
+function val(id){const v=$('#'+id).value.trim();return v===''?null:Number(v)}
+function setErr(id,m){$('#e-'+id).textContent=m||'';$('#'+id).setAttribute('aria-invalid',!!m)}
+$('#calc').onsubmit=e=>{e.preventDefault();const p=val('prev'),c=val('curr'),d=val('days'),t=val('tariff'),b=val('base'),ef=val('ef');let ok=true;
+const chk=(id,bad,m)=>{setErr(id,bad?m:'');if(bad)ok=false};
+chk('prev',p===null||isNaN(p)||p<0,'Enter a non-negative reading.');chk('curr',c===null||isNaN(c)||c<0||(p!==null&&c<p),c!==null&&p!==null&&c<p?'Current reading cannot be lower than previous.':'Enter a non-negative reading.');
+chk('days',d===null||!Number.isInteger(d)||d<1,'Enter a whole number of days, 1 or more.');chk('tariff',t===null||isNaN(t)||t<0,'Tariff cannot be negative.');chk('base',b!==null&&!(b>0),'Must be greater than 0 when provided.');chk('ef',ef!==null&&!(ef>=0),'Cannot be negative.');
+if(!ok){$('#out').hidden=true;return}
+const tot=c-p,avg=tot/d,exp=b?b*d:null;R={prev:p,curr:c,days:d,tariff:t,tot,avg,bill:tot*t,exp,diff:exp===null?null:tot-exp,ef,co2:ef===null?null:tot*ef};show()};
+function show(){const r=R;$('#out').hidden=false;$('#res').innerHTML=[['Total consumption',f2(r.tot)+' kL'],['Average daily',f2(r.avg)+' kL'],['Estimated bill','₹'+f2(r.bill)],['Expected',r.exp===null?'Not provided':f2(r.exp)+' kL'],['Difference',r.diff===null?'—':(r.diff>0?'+':'')+f2(r.diff)+' kL'],['Estimated carbon',r.co2===null?'Add a factor':f2(r.co2)+' kg CO₂e']].map(x=>`<div><small>${x[0]}</small><b>${x[1]}</b></div>`).join('');
+$('#interp').textContent=r.diff===null?'Add an expected daily baseline to see how this period compares.':r.diff>0?'Your recorded usage is higher than expected. Review possible causes and investigate potential water loss.':'Your recorded usage is within or below your expected baseline.';buildReport()}
+$('#demoBtn').onclick=()=>{[['prev',1200],['curr',1536],['days',28],['tariff',18],['base',10],['ef',0.3]].forEach(([k,v])=>$('#'+k).value=v);$('#calc').requestSubmit()};
+$('#seg').onclick=e=>{const b=e.target.closest('button');if(!b)return;pct=+b.dataset.p;$$('#seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));buildReport()};
+$('#toReport').onclick=()=>{buildReport();$('#report-sec').scrollIntoView()};$('#print').onclick=()=>window.print();
+function buildReport(){if(!R)return;const r=R,base=r.exp??r.tot,ws=base*pct/100,cs=ws*r.tariff,ex=r.exp===null?null:Math.max(0,r.diff);
+$('#report').innerHTML=`<h3>AquaRakshak Water Savings Impact Report</h3><p>Based on user-entered data. Generated ${new Date().toLocaleDateString('en-IN')}.</p>
+<table><tr><td>Reporting period</td><td>${r.days} days</td></tr><tr><td>Total consumption</td><td>${f2(r.tot)} kL</td></tr><tr><td>Average daily</td><td>${f2(r.avg)} kL</td></tr><tr><td>Estimated bill</td><td>₹${f2(r.bill)}</td></tr><tr><td>Expected consumption</td><td>${r.exp===null?'Not provided':f2(r.exp)+' kL'}</td></tr><tr><td>Potential excess vs baseline</td><td>${ex===null?'—':f2(ex)+' kL'}</td></tr><tr><td>Scenario</td><td>${pct}% reduction</td></tr><tr><td>Estimated potential water savings</td><td>${f2(ws)} kL</td></tr><tr><td>Estimated potential cost savings</td><td>₹${f2(cs)}</td></tr><tr><td>Estimated carbon from this consumption</td><td>${r.co2===null?'Not provided':f2(r.co2)+' kg CO₂e'}</td></tr><tr><td>Estimated carbon avoided at ${pct}% reduction</td><td>${r.ef===null?'Not provided':f2(ws*r.ef)+' kg CO₂e'}</td></tr></table>
+<h3 style="font-size:1rem">Recommendations</h3><ul><li>Check taps, toilets and tank overflow for visible leaks.</li><li>Read the meter before and after a period with no water use.</li><li>Fix dripping fixtures and consider low-flow aerators.</li><li>Re-measure after changes to see actual results.</li></ul>
+<h3 style="font-size:1rem">Assumptions and limitations</h3><p>Savings = baseline × ${pct}%, where baseline is ${r.exp===null?'your actual consumption':'your expected consumption'}. Cost = water savings × tariff entered. These are hypothetical estimates, not measured or guaranteed savings, and unusual usage does not prove a leak. Carbon figures multiply kL by the emission factor you entered (kg CO₂e per kL for water supply and treatment energy). They are estimates; use your utility's own factor for a meaningful result.</p>`}
+const T={general:['Book a Consultation','I would like to book a consultation to understand how AquaRakshak can help monitor water consumption, identify potential water loss, and explore practical water conservation opportunities.'],calculator:['Discuss Your Results','I would like to discuss my water consumption results, understand my estimated water bill, and explore opportunities to reduce unnecessary water usage.'],report:['Request Your Impact Report','I would like to generate a personalized water savings impact report and understand how I can improve water-use efficiency.']};
+const dlg=$('#dlg'),cf=$('#cf');let sent=false,dirty=false;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if(!b)return;const t=T[b.dataset.book]||T.general;$('#dt').textContent=t[0];if(!dirty||sent){cf.reset();sent=false}$('#r').value=t[1];$('#st').className='';$('#st').textContent='';dirty=false;document.body.style.overflow='hidden';dlg.showModal();$('#links').classList.remove('open')});
+function tryClose(){if(dirty&&!sent&&!confirm('Close and discard what you entered?'))return;dlg.close()}
+$('#close').onclick=tryClose;dlg.addEventListener('cancel',e=>{e.preventDefault();tryClose()});dlg.addEventListener('close',()=>document.body.style.overflow='');
+dlg.addEventListener('click',e=>{if(e.target===dlg)tryClose()});cf.addEventListener('input',e=>{if(e.target.id!=='r')dirty=true});
+cf.onsubmit=async e=>{e.preventDefault();const v=Object.fromEntries(new FormData(cf));let ok=true;const c=(id,bad,m)=>{setErr(id,bad?m:'');if(bad)ok=false};
+c('n',v.full_name.trim().length<2,'Enter your full name.');c('p',!/^\+?[0-9][0-9\s\-()]{7,17}$/.test(v.phone_number.trim())||v.phone_number.replace(/\D/g,'').length<10,'Enter a valid phone number, e.g. +91 98765 43210.');c('m',!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.email.trim()),'Enter a valid email address.');c('r',v.booking_reason.trim().length<10,'Please tell us why you want to book.');
+if(!ok){cf.querySelector('[aria-invalid=true]').focus();return}
+const s=$('#sub'),st=$('#st');if(s.disabled)return;s.disabled=true;s.textContent='Sending…';st.className='';
+try{const res=await fetch(API+'/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(v)});const j=await res.json().catch(()=>({}));if(!res.ok)throw new Error(j.error||'Request failed');sent=true;st.className='ok';st.textContent='Thanks. Your consultation request was received. We will contact you using the details provided.'}
+catch(err){st.className='bad';st.textContent='We could not send your request ('+err.message+'). Your details are kept. Please try again.'}
+finally{s.disabled=false;s.textContent='Request a Consultation'}};
+let ch={};const dayLbl=i=>'D'+(i+1);
+function demoData(){return [11,10.5,12,11.2,10.8,11.5,12.1,10.9,11.3,11,12.4,16.8,17.5,18.2].map((v,i)=>({day:i+1,kl:v}))}
+function render(rows,label,alerts,base){if(!window.Chart){$('#state').textContent='Charts could not load (Chart.js is fetched from a CDN). Check your connection and reload.';return}const tot=rows.reduce((a,r)=>a+r.kl,0);$('#kpis').innerHTML=[['Total consumption',f2(tot)+' kL'],['Average daily',f2(tot/rows.length)+' kL'],['Potential-leak alerts',alerts.length],['Readings recorded',rows.length]].map(k=>`<div class="card"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('');
+$('#state').innerHTML=`<span class="tag">${label}</span>`;const lb=rows.map((r,i)=>dayLbl(i)),h=Math.floor(rows.length/2),p1=rows.slice(0,h).reduce((a,r)=>a+r.kl,0),p2=rows.slice(h).reduce((a,r)=>a+r.kl,0);
+Object.values(ch).forEach(c=>c.destroy());const col={color:'#B3C8BC'},gr={color:'#29483B'},o={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:col}},scales:{x:{ticks:col,grid:gr},y:{ticks:col,grid:gr,beginAtZero:true}}};
+ch.a=new Chart($('#c1'),{type:'line',data:{labels:lb,datasets:[{label:'kL/day',data:rows.map(r=>r.kl),borderColor:'#48D6A0',backgroundColor:'rgba(72,214,160,.15)',fill:true,tension:.3}].concat(base?[{label:'Baseline',data:rows.map(()=>base),borderColor:'#F4C76B',borderDash:[6,4],pointRadius:0}]:[])},options:o});
+ch.b=new Chart($('#c2'),{type:'bar',data:{labels:['Earlier period','Recent period'],datasets:[{label:'kL',data:[p1,p2],backgroundColor:['#29483B','#48D6A0']}]},options:o});
+$('#alerts').innerHTML=alerts.length?alerts.map(a=>`<p style="margin-top:8px"><span class="tag">${a.status||'open'}</span> ${a.message}</p>`).join(''):'<p>No potential-leak alerts. Nothing unusual against the baseline.</p>'}
+$('#loadDemo').onclick=()=>{const rows=demoData(),al=rows.filter(r=>r.kl>11.5*1.25).map(r=>({status:'open',message:`Day ${r.day}: ${f2(r.kl)} kL is above 125% of the 11.5 kL baseline. Inspect for possible water loss (sample data).`}));render(rows,'Demo data — not real records',al,11.5)};
+$('#loadLive').onclick=async()=>{const s=$('#state');s.textContent='Loading saved readings…';try{const [a,b]=await Promise.all([fetch(API+'/api/readings'),fetch(API+'/api/alerts')]);if(!a.ok||!b.ok)throw new Error('Backend not configured');const rd=await a.json(),al=await b.json();if(!rd.length){s.textContent='No saved readings yet. Post a reading to /api/readings or try the demo.';return}render(rd.map(r=>({kl:+r.consumption})).reverse(),'Saved database records',al)}catch(e){s.textContent='Could not load saved data: '+e.message+'. Try the demo instead.'}};
+window.addEventListener('load',()=>setTimeout(()=>{if(window.Chart){const rows=demoData().slice(0,7);new Chart($('#c0'),{type:'bar',data:{labels:rows.map((r,i)=>dayLbl(i)),datasets:[{data:rows.map(r=>r.kl),backgroundColor:'#48D6A0'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#B3C8BC'}},y:{ticks:{color:'#B3C8BC'},grid:{color:'#29483B'}}}}})}},400));
+</script></body></html>
